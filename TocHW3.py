@@ -1,3 +1,7 @@
+# !/usr/bin/evn python
+# coding: utf-8
+
+'''
 -python version: 2.7.3
 
 -purpose:
@@ -9,4 +13,13 @@
 	3. specify the road name in column
 	4. specify the "year" in column
 
+'''
+
+import  sys
+import json
+from urlparse import urlparse
+
+#if __name__=='__main__':
+	
+	
 
