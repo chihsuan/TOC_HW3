@@ -2,10 +2,13 @@
 # -*- coding: utf8 -*-
 
 '''
+Name: 黃啟軒
+Student nubmer: F84004022
+
 -python version: 2.7.3
 
 -purpose:
-	use regular_expression to parse real-price housing information in our country, and find the average of all sale prices matching the condition as the arguments.
+	use 'regular_expression' to parse real-price housing information in our country, and find the average of all sale prices matching the condition as the arguments.
 
 -argurments:
 	1. url, such as http://www.datagarage.io/api/5365dee31bc6e9d9463a0057
@@ -52,8 +55,11 @@ def matchData(data):
 
 	# unicode the argumament variable to 'utf-8' for match data 
 	seach_township = unicode( sys.argv[2], "utf-8")
-	seach_year_from = int( unicode( sys.argv[4], "utf-8" ) )
-
+	try:
+		seach_year_from = int( unicode( sys.argv[4], "utf-8" ) )
+	except ValueError:
+		print "Error!", sys.argv[4], "is not a integer"
+		sys.exit(0)
 	# regular expression compile pattern for reuse in following search
 	seach_road_area = sys.argv[3]
 	pattern = re.compile( seach_road_area )
@@ -82,8 +88,10 @@ def matchData(data):
 
 # run program
 if len( sys.argv ) == 5:
+	print __doc__
+	print "Find", sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
 	data = getData()
 	result = matchData(data)
-	print result
+	print "Result:", result
 else:
 	print "ERROR len(argv) should be 4"
