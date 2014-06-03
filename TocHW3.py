@@ -14,9 +14,7 @@ Student nubmer: F84004022
 	1. url, such as http://www.datagarage.io/api/5365dee31bc6e9d9463a0057
 	2  specify the town, zone name in the column
 	3. specify the road name in column
-	4. specify the "year" in column
-
-'''
+	4. specify the "year" in column'''
 
 import re
 import  sys
@@ -45,7 +43,7 @@ def getData():
 	return data
 
 # find avg real_price that is match the argument condition
-def matchData(data):
+def filterData(data, township, road, year):
 	
 	# unicode zh-tw string to 'utf-8' for find value in data
 	tw_township = unicode("鄉鎮市區", "utf-8")
@@ -54,15 +52,15 @@ def matchData(data):
 	tw_price = unicode("總價元", "utf-8")
 
 	# unicode the argumament variable to 'utf-8' for match data 
-	seach_township = unicode( sys.argv[2], "utf-8")
+	township = unicode( township, "utf-8")
 	try:
-		seach_year_from = int( unicode( sys.argv[4], "utf-8" ) )
+		year = int( unicode( year, "utf-8" ) )
 	except ValueError:
-		print "Error!", sys.argv[4], "is not a integer"
+		print "Error!", year, "is not a integer"
 		sys.exit(0)
+
 	# regular expression compile pattern for reuse in following search
-	seach_road_area = sys.argv[3]
-	pattern = re.compile( seach_road_area )
+	pattern = re.compile( road )
 
 	total_price = 0
 	match_number = 0
@@ -73,9 +71,9 @@ def matchData(data):
 		if tw_township in datum and tw_road_area in datum \
 				and tw_year in datum and tw_price  in datum:
 			# match
-			if datum[tw_road_area] and seach_township == datum[tw_township] \
+			if datum[tw_road_area] and township == datum[tw_township] \
 					and pattern.search( datum[tw_road_area].encode("utf8") ) \
-						and (datum[ tw_year ] / 100)  >= seach_year_from:
+						and (datum[ tw_year ] / 100)  >= year:
 				total_price += int( datum[tw_price] )
 				match_number += 1
 		else:
@@ -91,7 +89,7 @@ if len( sys.argv ) == 5:
 	print __doc__
 	print "Find", sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
 	data = getData()
-	result = matchData(data)
+	result = filterData(data, sys.argv[2], sys.argv[3], sys.argv[4])
 	print "Result:", result
 else:
 	print "ERROR len(argv) should be 4"
