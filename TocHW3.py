@@ -27,15 +27,13 @@ def getData():
 	# make sure that we can get data from server
 	try:
 		response = urllib2.urlopen( sys.argv[1] )
-	except URLError, e:
-		if hasattr(e, 'reason'):
-			print 'we failed to connect server'
-			print e.reason
+	except urllib2.HTTPError, e:
+		print "Cannot retrieve URL: HTTP Error Code", e.code
+		sys.exit(0)
+	except urllib2.URLError, e:
+			print "Cannot retrieve URL: " + e.reason[1]
 			sys.exit(0)
-		elif hasattr(e, 'code'):
-			print 'The server could not fulfill the request'
-			print  e.code
-			sys.exit(0)
+
 
 	# convert to json format
 	data = json.load( response, encoding = ('utf-8') )	
