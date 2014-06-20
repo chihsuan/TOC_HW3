@@ -84,10 +84,8 @@ def filterData(data, township, road, year):
 
 # run program
 if len( sys.argv ) == 5:
-	print __doc__
-	print "Find", sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
 	data = getData()
 	result = filterData(data, sys.argv[2], sys.argv[3], sys.argv[4])
-	print "Result:", result
+	print result
 else:
 	print "ERROR len(argv) should be 4"
