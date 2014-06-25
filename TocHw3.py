@@ -79,7 +79,12 @@ def filterData(data, township, road, year):
 			sys.exit(0)
 
 	# return avg total_price
-	return int( total_price / match_number )
+	try:
+		return int( total_price / match_number )
+	#if divide by zero
+	except ZeroDivisionError:
+		print 'No Match any result!'
+		sys.exit(0)
 
 
 # run program
